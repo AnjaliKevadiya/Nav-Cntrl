@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1114" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="ManagedCompany" representedClassName="ManagedCompany" syncable="YES" codeGenerationType="class">
+        <attribute name="comapnyFullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comapnyImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="companyShortName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stockPrice" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ManagedCompany" positionX="160" positionY="192" width="128" height="105"/>
+    </elements>
+</model>
