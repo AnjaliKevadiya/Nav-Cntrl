@@ -142,6 +142,8 @@
 
 - (void)dealloc {
     [_tableView release];
+    [_productsArr release];
+    [_productLogoArr release];
     [super dealloc];
 }
 @end

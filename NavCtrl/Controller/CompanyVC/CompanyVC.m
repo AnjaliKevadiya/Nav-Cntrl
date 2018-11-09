@@ -22,10 +22,17 @@
     UIBarButtonItem *editButton = [[UIBarButtonItem alloc]initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(toggleEditMode)];
     self.navigationItem.rightBarButtonItem = editButton;
     
+   
     
-    self.companyList = [[NSMutableArray alloc] initWithObjects:@"Apple",@"Samsung",@"Google",@"Twitter", nil];//
+    _companyList = [[NSMutableArray alloc] initWithObjects:@"Apple",@"Samsung",@"Google",@"Twitter", nil];//
     
-    self.companyLogo = [[NSMutableArray alloc] initWithObjects:@"apple-logo",@"Samsung-logo",@"google-logo",@"twitter-logo", nil];//@[@"apple-logo",@"Samsung-logo",@"google-logo",@"twitter-logo"];
+    NSMutableArray *logoArray = [[NSMutableArray alloc] initWithObjects:@"apple-logo",@"Samsung-logo",@"google-logo",@"twitter-logo", nil];
+    self.companyLogo = logoArray;
+    [logoArray release];
+    
+    
+    
+    //@[@"apple-logo",@"Samsung-logo",@"google-logo",@"twitter-logo"];
     self.title = @"Watch List";
     // Do any additional setup after loading the view from its nib.
 }
@@ -148,6 +155,9 @@
 
 - (void)dealloc {
     [_tableView release];
+    [_companyList release];
+    [_companyLogo release];
+    [_productViewController release];
     [super dealloc];
 }
 @end

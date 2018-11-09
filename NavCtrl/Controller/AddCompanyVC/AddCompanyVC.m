@@ -16,6 +16,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _managerObj = [Manager shareManager];
+    
+    if (_isFromEdit == YES)
+    {
+        _companyFullnameTxt.text = _company.comapnyFullName;
+        _companyShortnameTxt.text = _company.companyShortName;
+        _companyImgUrlTxt.text = _company.comapnyImageUrl;
+        _lblTitle.text = @"Edit Company";
+    }
+    else
+    {
+        _lblTitle.text = @"New Company";
+    }
 }
 
 -(IBAction)onTapSave:(id)sender
@@ -57,7 +69,14 @@
             [_imgUrlView setBackgroundColor:[UIColor lightGrayColor]];
         }
         
-        [self.managerObj insertCompanyWithCompanyFullName:_companyFullnameTxt.text andCompanyShortName:_companyShortnameTxt.text andCompanyUrl:_companyImgUrlTxt.text andStockPrice:_stockPriceStr andProducts:nil];
+        if (_isFromEdit == YES)
+        {
+            [self.managerObj updateCompanyWithCompanyFullName:_companyFullnameTxt.text andCompanyShortName:_companyShortnameTxt.text andCompanyUrl:_companyImgUrlTxt.text andStockPrice:_company.stockPrice withCompanyObj:_company];
+        }
+        else
+        {
+            [self.managerObj insertCompanyWithCompanyFullName:_companyFullnameTxt.text andCompanyShortName:_companyShortnameTxt.text andCompanyUrl:_companyImgUrlTxt.text andStockPrice:_stockPriceStr];
+        }
         
         [self dismissViewControllerAnimated:YES completion:^{
             
@@ -72,31 +91,23 @@
     }];
 }
 
-
-//-(void)onTapSave:(UIBarButtonItem*)item{
-//    
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
-
-//-(void)saveCompanyTap
-//{
-//    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-//
-//    }];
-//}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)dealloc
+{
+    [_companyFullnameTxt release];
+    [_companyShortnameTxt release];
+    [_companyImgUrlTxt release];
+    [_fullnameView release];
+    [_shortnameView release];
+    [_imgUrlView release];
+    [_lblTitle release];
+    [_managerObj release];
+    [_stockPriceStr release];
+    [_company release];
+    [super dealloc];
 }
-*/
 @end

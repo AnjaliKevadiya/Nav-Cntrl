@@ -11,7 +11,11 @@
 #import "Product.h"
 #import "AppUtils.h"
 #import <CoreData/CoreData.h>
+//#import "ManagedCompany.h"
+//#import "ManagedProduct.h"
 
+#import "ManageCompany+CoreDataClass.h"
+#import "ManageProduct+CoreDataClass.h"
 
 @protocol ManagerDelegate <NSObject>
 
@@ -21,29 +25,39 @@
 
 @interface Manager : NSObject
 
-@property (nonatomic,retain) NSMutableArray *companyArr, *companyArrCD;
+@property (nonatomic,retain) NSMutableArray *companyArr;
 @property (nonatomic,retain) NSManagedObjectContext *context;
-@property (nonatomic,retain) NSManagedObjectModel *companyModel;
+@property (nonatomic,retain) NSManagedObjectModel *model;
 
 @property (nonatomic,retain) id<ManagerDelegate> updateDelegate;
 
 
 + (id) shareManager;
 
--(void) insertCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice andProducts:(Product *)products;
+-(void) insertCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice;
 
--(void) updateCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice andCompanyIndex : (NSInteger)companyIndex;
+-(void) updateCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice withCompanyObj:(ManageCompany *)companyObj;
 
+-(void) deleteCompany : (ManageCompany *)companyObj andCompanyIndex:(NSInteger)companyIndex;
+
+    
 -(void) insertProductWithProductName : (NSString *)productName andProductUrl : (NSString *)productUrl andProductImgUrl : (NSString *)productImgUrl andCompanyIndex:(NSInteger)companyIndex;
 
--(void) updateProductWithProductName : (NSString *)productName andProductUrl : (NSString *)productUrl andProductImgUrl : (NSString *)productImgUrl andProductObj:(Product *)productObj andCompanyIndex:(NSInteger)companyIndex;
+-(void) updateProductWithProductName : (NSString *)productName andProductUrl : (NSString *)productUrl andProductImgUrl : (NSString *)productImgUrl andProductObj:(ManageProduct *)productObj;
 
--(void) deleteProduct : (Product *)productObj andCompanyIndex:(NSInteger)companyIndex;
+-(void) deleteProduct : (ManageProduct *)productObj andCompanyIndex:(NSInteger)companyIndex;
+
 
 -(void) fetchStockPrices;
 
 -(NSString *) archivePath;
 -(void) initModelContext;
 
+-(NSMutableArray *)showAllCompanies;
+-(NSSet *)showAllProductsWithCompanyIndex : (NSInteger)companyIndex;
+
+
+-(void)undoChanges;
+-(void)redoChanges;
 
 @end

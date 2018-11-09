@@ -21,4 +21,12 @@
     // Configure the view for the selected state
 }
 
+-(void)dealloc
+{
+    [_imgView release];
+    [_lblName release];
+    [_lblStockPrice release];
+    
+    [super dealloc];
+}
 @end

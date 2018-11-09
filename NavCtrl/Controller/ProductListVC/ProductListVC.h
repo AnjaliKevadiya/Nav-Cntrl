@@ -21,7 +21,7 @@
 @property(nonatomic) NSInteger companyIndex;
 
 @property (retain, nonatomic) Manager *managerObj;
-@property(retain, nonatomic) Product *productObj;
+@property(retain, nonatomic) ManageProduct *productObj;
 
 @property(retain, nonatomic) NSString *companyTitleStr, *comapnyFullnameStr, *companyImgStr;
 @property (retain, nonatomic) NSMutableArray *productArr;

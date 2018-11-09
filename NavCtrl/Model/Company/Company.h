@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface Company : NSManagedObject
+@interface Company : NSObject
 
 @property (nonatomic,retain) NSString *comapnyFullName;
 @property (nonatomic,retain) NSString *companyShortName;

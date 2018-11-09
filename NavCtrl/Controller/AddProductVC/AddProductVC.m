@@ -73,7 +73,8 @@
         
         if (_isFromEdit == YES)
         {
-            [self.managerObj updateProductWithProductName:_productNameTxt.text andProductUrl:_productUrlTxt.text andProductImgUrl:_productImgUrlTxt.text andProductObj:_productObj andCompanyIndex:_companyIndex];
+            [self.managerObj updateProductWithProductName:_productNameTxt.text andProductUrl:_productUrlTxt.text andProductImgUrl:_productImgUrlTxt.text andProductObj:_productObj];
+            
 
         }
         else
@@ -97,6 +98,19 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+-(void)dealloc
+{
+    [_productObj release];
+    [_managerObj release];
+    [_productNameTxt release];
+    [_productUrlTxt release];
+    [_productImgUrlTxt release];
+    [_nameView release];
+    [_urlView release];
+    [_imgUrlView release];
+    [super dealloc];
 }
 
 @end

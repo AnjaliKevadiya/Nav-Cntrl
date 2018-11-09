@@ -415,4 +415,8 @@ static iToastSettings *sharedSettings = nil;
 	return copy;
 }
 
+-(void)dealloc
+{
+    [super dealloc];
+}
 @end

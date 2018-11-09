@@ -21,4 +21,15 @@
     return myCompany;
 }
 
+- (void)dealloc
+{
+    [_comapnyFullName release];
+    [_companyShortName release];
+    [_comapnyImageUrl release];
+    [_productArr release];
+    [_stockPrice release];
+    [super dealloc];
+
+}
+
 @end

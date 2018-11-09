@@ -19,13 +19,18 @@
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet UIView *noDataView;
+@property (retain, nonatomic) IBOutlet UIView *undoRedoView;
+
+@property (nonatomic) BOOL isUndoRedoShow;
 
 @property (retain, nonatomic) Manager *manager;
-@property (retain, nonatomic) Company *company;
+@property (retain, nonatomic) ManageCompany *company;
 @property (retain, nonatomic) ProductListVC *productListVC;
 
 @property (retain, nonatomic) NSMutableArray *companyArr;
 
 -(IBAction)onTapAdd:(id)sender;
+-(IBAction)onTapRedo:(id)sender;
+-(IBAction)onTapUndo:(id)sender;
 
 @end

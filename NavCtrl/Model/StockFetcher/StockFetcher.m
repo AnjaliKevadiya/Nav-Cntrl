@@ -120,4 +120,9 @@
     }
 }*/
 
+-(void)dealloc
+{
+    [_delegate release];
+    [super dealloc];
+}
 @end

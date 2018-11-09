@@ -19,7 +19,7 @@
 
 @property (retain, nonatomic) IBOutlet UIView *nameView, *urlView, * imgUrlView;
 @property (retain, nonatomic) Manager *managerObj;
-@property (retain,nonatomic) Product *productObj;
+@property (retain,nonatomic) ManageProduct *productObj;
 
 @property(nonatomic) BOOL isFromEdit;
 

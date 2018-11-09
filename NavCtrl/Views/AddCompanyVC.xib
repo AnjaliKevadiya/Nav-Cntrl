@@ -22,6 +22,7 @@
                 <outlet property="companyShortnameTxt" destination="UHs-BN-jUz" id="ZQn-Ld-8cD"/>
                 <outlet property="fullnameView" destination="HP7-GU-EDy" id="5wm-8b-UPt"/>
                 <outlet property="imgUrlView" destination="jUY-EA-ax4" id="rs1-hz-LaH"/>
+                <outlet property="lblTitle" destination="sOp-ds-guS" id="IQL-ft-Ju3"/>
                 <outlet property="shortnameView" destination="PVO-Ts-rso" id="Ch1-T9-hS6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="3uO-1b-GZK"/>
             </connections>

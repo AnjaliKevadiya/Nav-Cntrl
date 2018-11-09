@@ -19,6 +19,7 @@
             <connections>
                 <outlet property="noDataView" destination="Scl-JC-uWw" id="fn7-qz-ZlW"/>
                 <outlet property="tableView" destination="Iga-Wy-wlL" id="2FG-y2-jxW"/>
+                <outlet property="undoRedoView" destination="hzF-hh-X8x" id="wBI-Nf-672"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -57,6 +58,35 @@
                             <state key="normal" title="+ Add Company"/>
                             <connections>
                                 <action selector="onTapAdd:" destination="-1" eventType="touchUpInside" id="mwR-z4-T65"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hzF-hh-X8x">
+                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jyb-5L-4ZR">
+                            <rect key="frame" x="0.0" y="0.0" width="189" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Redo"/>
+                            <connections>
+                                <action selector="onTapRedo:" destination="-1" eventType="touchUpInside" id="2YK-SJ-mXn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWe-V7-C0b">
+                            <rect key="frame" x="186" y="0.0" width="189" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <state key="normal" title="Undo"/>
+                            <connections>
+                                <action selector="onTapUndo:" destination="-1" eventType="touchUpInside" id="MhW-ke-sgs"/>
                             </connections>
                         </button>
                     </subviews>

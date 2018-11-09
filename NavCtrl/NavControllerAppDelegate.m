@@ -16,12 +16,13 @@
 {
     // Override point for customization after application launch.
     HomeVC *rootController = [[HomeVC alloc]init];
-    self.navigationController = [[UINavigationController alloc]
+    
+    _navigationController = [[UINavigationController alloc]
                             initWithRootViewController:rootController];
     
-    self.window = [[UIWindow alloc]
+    _window = [[UIWindow alloc]
                    initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:self.navigationController];
+    [_window setRootViewController:self.navigationController];
     [self.window makeKeyAndVisible];
     return YES;
     
@@ -75,4 +76,11 @@
     return rechable;
 }
 
+-(void)dealloc
+{
+    [_window release];
+    [_rechability release];
+    [_navigationController release];
+    [super dealloc];
+}
 @end

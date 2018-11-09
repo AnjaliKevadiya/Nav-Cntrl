@@ -35,8 +35,10 @@
 {
     [super viewWillAppear:animated];
     
-    Company *company = [_managerObj.companyArr objectAtIndex:_companyIndex];
-    _productArr = company.productArr;
+    //Company *company = [_managerObj.companyArr objectAtIndex:_companyIndex];
+
+    NSSet *set = [_managerObj showAllProductsWithCompanyIndex:_companyIndex];
+    _productArr = [[set allObjects] mutableCopy];
     
     NSLog(@"_productArr %@",_productArr);
     
@@ -117,8 +119,9 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-        _productObj = [_productArr objectAtIndex:indexPath.row];
+//        _productObj = [_productArr objectAtIndex:indexPath.row];
         [_productArr removeObjectAtIndex:indexPath.row];
+        
         [self.managerObj deleteProduct:_productObj andCompanyIndex:_companyIndex];
         [_tblView reloadData];
         
@@ -140,4 +143,20 @@
     [super didReceiveMemoryWarning];
 }
 
+-(void)dealloc
+{
+    [_companyNameLbl release];
+    [_companyTitleLbl release];
+    [_companyImgView release];
+    [_tblView release];
+    [_noDataView release];
+    [_managerObj release];
+    [_productObj release];
+    [_productArr release];
+    [_companyImgStr release];
+    [_companyTitleStr release];
+    [_comapnyFullnameStr release];
+    
+    [super dealloc];
+}
 @end

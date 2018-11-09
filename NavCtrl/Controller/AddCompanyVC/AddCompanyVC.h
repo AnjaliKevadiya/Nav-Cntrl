@@ -15,9 +15,13 @@
 @property (retain, nonatomic) IBOutlet UITextField *companyShortnameTxt;
 @property (retain, nonatomic) IBOutlet UITextField *companyImgUrlTxt;
 @property (retain, nonatomic) IBOutlet UIView *fullnameView, *shortnameView, * imgUrlView;
+@property (retain, nonatomic) IBOutlet UILabel *lblTitle;
+
 @property (retain, nonatomic) Manager *managerObj;
 
 @property(nonatomic, retain) NSString *stockPriceStr;
+@property(nonatomic, retain) ManageCompany *company;
+@property (nonatomic) BOOL isFromEdit;
 
 -(IBAction)onTapSave:(id)sender;
 -(IBAction)onTapCancel:(id)sender;

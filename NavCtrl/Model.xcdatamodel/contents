@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="16G1114" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="ManagedCompany" representedClassName="ManagedCompany" syncable="YES" codeGenerationType="class">
+    <entity name="ManageCompany" representedClassName="ManageCompany" syncable="YES" codeGenerationType="class">
         <attribute name="comapnyFullName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="comapnyImageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="companyShortName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stockPrice" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="product" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ManageProduct" inverseName="company" inverseEntity="ManageProduct" syncable="YES"/>
+    </entity>
+    <entity name="ManageProduct" representedClassName="ManageProduct" syncable="YES" codeGenerationType="class">
+        <attribute name="companyIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="productImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="company" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ManageCompany" inverseName="product" inverseEntity="ManageCompany" syncable="YES"/>
     </entity>
     <elements>
-        <element name="ManagedCompany" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="ManageCompany" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="ManageProduct" positionX="333" positionY="189" width="128" height="118"/>
     </elements>
 </model>

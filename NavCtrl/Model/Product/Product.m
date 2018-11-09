@@ -19,4 +19,13 @@
     });
     return myProduct;
 }
+
+-(void)dealloc
+{
+    [_productName release];
+    [_productUrl release];
+    [_productImageUrl release];
+    [super dealloc];
+}
+
 @end

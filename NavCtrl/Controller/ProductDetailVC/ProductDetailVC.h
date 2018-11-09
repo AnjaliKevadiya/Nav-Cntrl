@@ -14,7 +14,7 @@
 @interface ProductDetailVC : UIViewController <WKNavigationDelegate>
 
 @property(nonatomic) NSInteger companyIndex;
-@property(retain, nonatomic) Product *productObj;
+@property(retain, nonatomic) ManageProduct *productObj;
 @property(retain, nonatomic) WKWebView *webView;
 
 @end
