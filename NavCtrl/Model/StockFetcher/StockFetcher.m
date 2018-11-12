@@ -42,7 +42,7 @@
                                    }
                                    NSLog(@"arr %@",arr);
                                    
-                                   NSMutableDictionary *dicStock = [[NSMutableDictionary alloc] init];
+                                   NSMutableDictionary *dicStock = [[NSMutableDictionary alloc] init] ;
                                    
                                    for (int i = 0; i < arr.count; i++) {
                                        
@@ -50,6 +50,8 @@
                                        NSLog(@"dicStock %@",dicStock);
                                    }
                                    [self.delegate stockFetchSuccessWithPriceString:dicStock];
+                                   
+                                   [dicStock release];
                                    
                                }];
     }

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Manager.h"
 
-@interface AddProductVC : UIViewController
+@interface AddProductVC : UIViewController<UITextFieldDelegate>
 
 @property (retain, nonatomic) IBOutlet UITextField *productNameTxt;
 @property (retain, nonatomic) IBOutlet UITextField *productUrlTxt;
@@ -17,7 +17,7 @@
 
 @property (nonatomic) NSInteger companyIndex;
 
-@property (retain, nonatomic) IBOutlet UIView *nameView, *urlView, * imgUrlView;
+@property (retain, nonatomic) IBOutlet UIView *nameView, *urlView, *imgUrlView, *mainView;
 @property (retain, nonatomic) Manager *managerObj;
 @property (retain,nonatomic) ManageProduct *productObj;
 

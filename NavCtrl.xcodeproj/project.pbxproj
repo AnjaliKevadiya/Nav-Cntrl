@@ -7,15 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25FDEA6A2188BD9E00407816 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA692188BD9E00407816 /* Company.m */; };
-		25FDEA6D2188BDAD00407816 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA6C2188BDAD00407816 /* Product.m */; };
+		2595D820219A10A6008E6E33 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2595D81F219A10A6008E6E33 /* MobileCoreServices.framework */; };
 		25FDEA712188BED100407816 /* Manager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA702188BED100407816 /* Manager.m */; };
 		25FDEA7E2188E6A900407816 /* HomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA7C2188E6A900407816 /* HomeVC.m */; };
 		25FDEA7F2188E6A900407816 /* HomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FDEA7D2188E6A900407816 /* HomeVC.xib */; };
 		25FDEA832188F60A00407816 /* AddCompanyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FDEA822188F60A00407816 /* AddCompanyVC.xib */; };
 		25FDEA852188F62300407816 /* AddProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FDEA842188F62300407816 /* AddProductVC.xib */; };
 		25FDEA882188F70200407816 /* AddCompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA872188F70200407816 /* AddCompanyVC.m */; };
-		25FDEA8C2189FEB200407816 /* AppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA8B2189FEB200407816 /* AppUtils.m */; };
 		25FDEA92218A359100407816 /* CompanyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FDEA90218A359100407816 /* CompanyTableViewCell.m */; };
 		25FDEA93218A359100407816 /* CompanyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FDEA91218A359100407816 /* CompanyTableViewCell.xib */; };
 		25FDEA98218A3A3800407816 /* ProductListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FDEA96218A3A3800407816 /* ProductListVC.xib */; };
@@ -40,9 +38,7 @@
 		48A656D818163BF200746D36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 48A656D618163BF200746D36 /* InfoPlist.strings */; };
 		48A656DA18163BF200746D36 /* NavCtrlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 48A656D918163BF200746D36 /* NavCtrlTests.m */; };
 		48A656EE1816468000746D36 /* Sunflower.gif in Resources */ = {isa = PBXBuildFile; fileRef = 48A656ED1816468000746D36 /* Sunflower.gif */; };
-		9E62FF211E4A33DC002D55B8 /* CompanyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62FF1F1E4A33DC002D55B8 /* CompanyVC.m */; };
 		9E62FF221E4A33DC002D55B8 /* CompanyVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF201E4A33DC002D55B8 /* CompanyVC.xib */; };
-		9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E62FF241E4A33F1002D55B8 /* ProductVC.m */; };
 		9E62FF271E4A33F1002D55B8 /* ProductVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF251E4A33F1002D55B8 /* ProductVC.xib */; };
 		9E62FF291E4A3982002D55B8 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
@@ -58,10 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		25FDEA682188BD9E00407816 /* Company.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
-		25FDEA692188BD9E00407816 /* Company.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
-		25FDEA6B2188BDAD00407816 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
-		25FDEA6C2188BDAD00407816 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		2595D81F219A10A6008E6E33 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		25FDEA6F2188BED100407816 /* Manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Manager.h; sourceTree = "<group>"; };
 		25FDEA702188BED100407816 /* Manager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Manager.m; sourceTree = "<group>"; };
 		25FDEA7B2188E6A900407816 /* HomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeVC.h; sourceTree = "<group>"; };
@@ -71,8 +64,6 @@
 		25FDEA842188F62300407816 /* AddProductVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddProductVC.xib; sourceTree = "<group>"; };
 		25FDEA862188F70200407816 /* AddCompanyVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddCompanyVC.h; sourceTree = "<group>"; };
 		25FDEA872188F70200407816 /* AddCompanyVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddCompanyVC.m; sourceTree = "<group>"; };
-		25FDEA8A2189FEB200407816 /* AppUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppUtils.h; sourceTree = "<group>"; };
-		25FDEA8B2189FEB200407816 /* AppUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppUtils.m; sourceTree = "<group>"; };
 		25FDEA8F218A359100407816 /* CompanyTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CompanyTableViewCell.h; sourceTree = "<group>"; };
 		25FDEA90218A359100407816 /* CompanyTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CompanyTableViewCell.m; sourceTree = "<group>"; };
 		25FDEA91218A359100407816 /* CompanyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompanyTableViewCell.xib; sourceTree = "<group>"; };
@@ -86,7 +77,6 @@
 		25FDEAA5218B636500407816 /* ProductDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductDetailVC.xib; sourceTree = "<group>"; };
 		25FDEAA92190C57900407816 /* StockFetcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockFetcher.h; sourceTree = "<group>"; };
 		25FDEAAA2190C57900407816 /* StockFetcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StockFetcher.m; sourceTree = "<group>"; };
-		25FDEAAC2190C5C900407816 /* StockFetcherDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StockFetcherDelegate.h; sourceTree = "<group>"; };
 		25FDEAB02191F9A600407816 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		25FDEAB12191F9A600407816 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		25FDEABA2191FD1000407816 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
@@ -109,11 +99,7 @@
 		48A656D718163BF200746D36 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		48A656D918163BF200746D36 /* NavCtrlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavCtrlTests.m; sourceTree = "<group>"; };
 		48A656ED1816468000746D36 /* Sunflower.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Sunflower.gif; sourceTree = "<group>"; };
-		9E62FF1E1E4A33DC002D55B8 /* CompanyVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyVC.h; sourceTree = "<group>"; };
-		9E62FF1F1E4A33DC002D55B8 /* CompanyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyVC.m; sourceTree = "<group>"; };
 		9E62FF201E4A33DC002D55B8 /* CompanyVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyVC.xib; sourceTree = "<group>"; };
-		9E62FF231E4A33F1002D55B8 /* ProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductVC.h; sourceTree = "<group>"; };
-		9E62FF241E4A33F1002D55B8 /* ProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductVC.m; sourceTree = "<group>"; };
 		9E62FF251E4A33F1002D55B8 /* ProductVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductVC.xib; sourceTree = "<group>"; };
 		9E62FF281E4A3982002D55B8 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -123,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2595D820219A10A6008E6E33 /* MobileCoreServices.framework in Frameworks */,
 				48A656B718163BF200746D36 /* CoreGraphics.framework in Frameworks */,
 				48A656B918163BF200746D36 /* UIKit.framework in Frameworks */,
 				48A656B518163BF200746D36 /* Foundation.framework in Frameworks */,
@@ -147,28 +134,8 @@
 			children = (
 				25FDEAA82190C56300407816 /* StockFetcher */,
 				25FDEA6E2188BEC400407816 /* Manager */,
-				25FDEA672188BD9000407816 /* Company */,
-				25FDEA662188BD9000407816 /* Product */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		25FDEA662188BD9000407816 /* Product */ = {
-			isa = PBXGroup;
-			children = (
-				25FDEA6B2188BDAD00407816 /* Product.h */,
-				25FDEA6C2188BDAD00407816 /* Product.m */,
-			);
-			path = Product;
-			sourceTree = "<group>";
-		};
-		25FDEA672188BD9000407816 /* Company */ = {
-			isa = PBXGroup;
-			children = (
-				25FDEA682188BD9E00407816 /* Company.h */,
-				25FDEA692188BD9E00407816 /* Company.m */,
-			);
-			path = Company;
 			sourceTree = "<group>";
 		};
 		25FDEA6E2188BEC400407816 /* Manager */ = {
@@ -202,28 +169,8 @@
 				25FDEA99218A3A6700407816 /* ProductListVC */,
 				25FDEA812188F5E200407816 /* AddProductVC */,
 				25FDEAA2218B635000407816 /* ProductDetailVC */,
-				25FDEA792188E5F700407816 /* CompanyVC */,
-				25FDEA782188E5F700407816 /* ProductVC */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		25FDEA782188E5F700407816 /* ProductVC */ = {
-			isa = PBXGroup;
-			children = (
-				9E62FF231E4A33F1002D55B8 /* ProductVC.h */,
-				9E62FF241E4A33F1002D55B8 /* ProductVC.m */,
-			);
-			path = ProductVC;
-			sourceTree = "<group>";
-		};
-		25FDEA792188E5F700407816 /* CompanyVC */ = {
-			isa = PBXGroup;
-			children = (
-				9E62FF1E1E4A33DC002D55B8 /* CompanyVC.h */,
-				9E62FF1F1E4A33DC002D55B8 /* CompanyVC.m */,
-			);
-			path = CompanyVC;
 			sourceTree = "<group>";
 		};
 		25FDEA7A2188E65F00407816 /* HomeVC */ = {
@@ -259,8 +206,6 @@
 			children = (
 				25FDEAB92191FD1000407816 /* iToast */,
 				25FDEAAF2191F9A600407816 /* Reachability */,
-				25FDEA8A2189FEB200407816 /* AppUtils.h */,
-				25FDEA8B2189FEB200407816 /* AppUtils.m */,
 			);
 			path = AppUtils;
 			sourceTree = "<group>";
@@ -298,7 +243,6 @@
 			children = (
 				25FDEAA92190C57900407816 /* StockFetcher.h */,
 				25FDEAAA2190C57900407816 /* StockFetcher.m */,
-				25FDEAAC2190C5C900407816 /* StockFetcherDelegate.h */,
 			);
 			path = StockFetcher;
 			sourceTree = "<group>";
@@ -352,6 +296,7 @@
 		48A656B318163BF200746D36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2595D81F219A10A6008E6E33 /* MobileCoreServices.framework */,
 				48A656B418163BF200746D36 /* Foundation.framework */,
 				48A656B618163BF200746D36 /* CoreGraphics.framework */,
 				48A656B818163BF200746D36 /* UIKit.framework */,
@@ -514,19 +459,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				25FDEAC72192317100407816 /* Model.xcdatamodel in Sources */,
-				9E62FF211E4A33DC002D55B8 /* CompanyVC.m in Sources */,
-				25FDEA6A2188BD9E00407816 /* Company.m in Sources */,
 				48A656C518163BF200746D36 /* NavControllerAppDelegate.m in Sources */,
-				25FDEA6D2188BDAD00407816 /* Product.m in Sources */,
 				25FDEA9C218A3A6700407816 /* ProductListVC.m in Sources */,
 				48A656C118163BF200746D36 /* main.m in Sources */,
 				25FDEA92218A359100407816 /* CompanyTableViewCell.m in Sources */,
 				25FDEA7E2188E6A900407816 /* HomeVC.m in Sources */,
 				25FDEAAB2190C57A00407816 /* StockFetcher.m in Sources */,
 				25FDEABC2191FD1100407816 /* iToast.m in Sources */,
-				9E62FF261E4A33F1002D55B8 /* ProductVC.m in Sources */,
 				25FDEAB22191F9A600407816 /* Reachability.m in Sources */,
-				25FDEA8C2189FEB200407816 /* AppUtils.m in Sources */,
 				25FDEAA0218B4FBE00407816 /* AddProductVC.m in Sources */,
 				25FDEA882188F70200407816 /* AddCompanyVC.m in Sources */,
 				25FDEA712188BED100407816 /* Manager.m in Sources */,

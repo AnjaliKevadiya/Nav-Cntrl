@@ -17,19 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStylePlain target:self action:@selector(onTapAdd:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:127.0f/255.0f green:180.0f/255.0f blue:57.0f/255.0f alpha:1.0f];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    _manager = [Manager shareManager];
-    _manager.updateDelegate = self;
-    [_undoRedoView setHidden:YES];
-    
-    [NSTimer scheduledTimerWithTimeInterval:60 repeats:YES block:^(NSTimer * _Nonnull timer) {
-        [self.manager fetchStockPrices];
-    }];
+    [self  setUpLayouts];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -51,30 +39,28 @@
     }
     [_tableView reloadData];
     
-    [self.manager fetchStockPrices];
+    [_manager fetchStockPrices];
 }
 
-#pragma mark - Add Company
+#pragma mark - Add Tap
 -(IBAction)onTapAdd:(id)sender
 {
     AddCompanyVC *addCompanyVC = [[AddCompanyVC alloc] initWithNibName:@"AddCompanyVC" bundle:nil];
     [self presentViewController:addCompanyVC animated:YES completion:^{
     }];
+    [addCompanyVC release];
 }
 
+#pragma mark - Redo Tap
 -(IBAction)onTapRedo:(id)sender
 {
     [_manager redoChanges];
 }
 
+#pragma mark - Undo Tap
 -(IBAction)onTapUndo:(id)sender
 {
     [_manager undoChanges];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UITableview Delegate
@@ -96,8 +82,26 @@
     NSString *companyName = [NSString stringWithFormat:@"%@(%@)",_company.comapnyFullName,_company.companyShortName];
     cell.lblName.text = companyName;
     cell.lblStockPrice.text = _company.stockPrice;
-    cell.imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",_company.comapnyImageUrl]];
+    //cell.imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",_company.comapnyImageUrl]];
     
+    dispatch_async(dispatch_get_global_queue(0,0), ^{
+        NSData * data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: [NSString stringWithFormat:@"%@",_company.comapnyImageUrl]]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if ( data == nil )
+            {
+                cell.imgView.image = [UIImage imageNamed:@"emptystate-homeView"];
+                return ;
+            }
+            else
+            {
+                cell.imgView.image = [UIImage imageWithData: data];
+            }
+        });
+        [data release];
+    });
+
     return cell;
 }
 
@@ -108,40 +112,28 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _productListVC = [[ProductListVC alloc] init];
+    ProductListVC *productListVC = [[ProductListVC alloc] init];
     
     _company = [_companyArr objectAtIndex:indexPath.row];
     
-    _productListVC.title = _company.comapnyFullName;
-    _productListVC.comapnyFullnameStr = [NSString stringWithFormat:@"%@(%@)",_company.comapnyFullName,_company.companyShortName];
-    _productListVC.companyImgStr = _company.comapnyImageUrl;
-    _productListVC.companyIndex = indexPath.row;
-    [self.navigationController pushViewController:_productListVC animated:YES];
+    productListVC.title = _company.comapnyFullName;
+    productListVC.comapnyFullnameStr = [NSString stringWithFormat:@"%@(%@)",_company.comapnyFullName,_company.companyShortName];
+    productListVC.companyImgStr = _company.comapnyImageUrl;
+    productListVC.companyIndex = indexPath.row;
+    [self.navigationController pushViewController:productListVC animated:YES];
+    
+    [productListVC release];
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (_isUndoRedoShow == YES)
-//    {
-//        [_undoRedoView setHidden:YES];
-//        _isUndoRedoShow = NO;
-//    }
-//    else
-//    {
-//        [_undoRedoView setHidden:NO];
-//        _isUndoRedoShow = YES;
-//    }
-
     return YES;
-    
-    
 }
 
 -(NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewRowAction *editAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Edit" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         
-        NSLog(@"_companyArr %p",_companyArr);
         _company = [_companyArr objectAtIndex:indexPath.row];
         
         AddCompanyVC *addComapnyVC = [[AddCompanyVC alloc] initWithNibName:@"AddCompanyVC" bundle:nil];
@@ -150,12 +142,12 @@
         [self presentViewController:addComapnyVC animated:YES completion:^{
             
         }];
+        [addComapnyVC release];
     }];
     editAction.backgroundColor = [UIColor blueColor];
     
     UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Delete"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
         
-        NSLog(@"_companyArr %p",_companyArr);
         _company = [_companyArr objectAtIndex:indexPath.row];
         [_manager deleteCompany:_company andCompanyIndex:indexPath.row];
         
@@ -175,21 +167,41 @@
 //    }
 //}
 
+#pragma mark - SetUpLayouts
+-(void)setUpLayouts
+{
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStylePlain target:self action:@selector(onTapAdd:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:127.0f/255.0f green:180.0f/255.0f blue:57.0f/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    _manager = [Manager shareManager];
+    _manager.updateDelegate = self;
+    [_undoRedoView setHidden:YES];
+    
+//    [NSTimer scheduledTimerWithTimeInterval:60 repeats:YES block:^(NSTimer * _Nonnull timer) {
+//        [_manager fetchStockPrices];
+//    }];
+}
+
+-(void)update {
+    _companyArr = _manager.companyArr;
+    [_tableView reloadData];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 - (void)dealloc {
-    
     [_tableView release];
     [_noDataView release];
     [_undoRedoView release];
-    [_manager release];
-    [_company release];
-    [_productListVC release];
     [_companyArr release];
     [super dealloc];
 }
 
--(void)update {
-    self.companyArr = self.manager.companyArr;
-    [self.tableView reloadData];
-}
 @end

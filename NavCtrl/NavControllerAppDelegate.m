@@ -8,7 +8,6 @@
 
 #import "NavControllerAppDelegate.h"
 #import "HomeVC.h"
-#import "CompanyVC.h"
 
 @implementation NavControllerAppDelegate
 
@@ -19,6 +18,8 @@
     
     _navigationController = [[UINavigationController alloc]
                             initWithRootViewController:rootController];
+    
+    [rootController release];
     
     _window = [[UIWindow alloc]
                    initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -62,6 +63,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 +(BOOL)isNetworkRechability
 {
     BOOL rechable = NO;

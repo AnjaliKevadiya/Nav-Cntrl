@@ -7,9 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "StockFetcherDelegate.h"
 #import "NavControllerAppDelegate.h"
 #import "iToast.h"
+
+@protocol StockFetcherDelegate <NSObject>
+
+-(void)stockFetchSuccessWithPriceString : (NSDictionary *) dicStock;
+
+-(void)stockFetchDidFailWithError : (NSError *) error;
+-(void)stockFetchDidStart;
+
+@end
 
 @interface StockFetcher : NSObject
 

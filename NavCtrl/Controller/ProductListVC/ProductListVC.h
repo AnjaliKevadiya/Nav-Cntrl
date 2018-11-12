@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "AddProductVC.h"
-#import "Product.h"
 #import "CompanyTableViewCell.h"
 #import "ProductDetailVC.h"
 
@@ -20,7 +19,7 @@
 @property(retain, nonatomic) IBOutlet UIView *noDataView;
 @property(nonatomic) NSInteger companyIndex;
 
-@property (retain, nonatomic) Manager *managerObj;
+@property (assign, nonatomic) Manager *managerObj;
 @property(retain, nonatomic) ManageProduct *productObj;
 
 @property(retain, nonatomic) NSString *companyTitleStr, *comapnyFullnameStr, *companyImgStr;

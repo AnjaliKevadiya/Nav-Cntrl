@@ -30,15 +30,47 @@
 -(id)init
 {
 //    [super init];
-//    if (self == [super init]) {
+    if (self = [super init]) {
     
        // _companyArr = [[NSMutableArray alloc] init];
         
         _stockFetcher = [[StockFetcher alloc] init];
         _stockFetcher.delegate = self;
         [self initModelContext];
-//    }
-    return self;
+        
+        return self;
+    }
+    else return nil;
+    
+}
+
+-(NSString *) archivePath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
+    return [documentDirectory stringByAppendingPathComponent:@"storeCompany.data"];
+}
+
+-(void) initModelContext
+{
+    _model = [NSManagedObjectModel mergedModelFromBundles:nil];
+    NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
+    NSString *path = [self archivePath];
+    NSURL *storeUrl = [NSURL fileURLWithPath:path];
+    NSError *error = nil;
+    
+    if (![psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
+        //        [NSException raise:@"Open failed" format:@"Reason %@",error.localizedDescription];
+        NSLog(@"err %@",error.localizedDescription);
+        
+    }
+    _context = [[NSManagedObjectContext alloc] init];
+    [_context setPersistentStoreCoordinator:psc];
+    [psc release];
+    
+    NSUndoManager *undoManager = [[NSUndoManager alloc] init];
+    [_context setUndoManager: undoManager];
+    [undoManager release];
 }
 
 -(void) insertCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice
@@ -51,7 +83,6 @@
 //    [comapany setProductArr:[[NSMutableArray alloc] init]];
 //    [_companyArr addObject: comapany];
 //    NSLog(@"_companyArr %@",_companyArr);
-    
     
     ManageCompany *companyManaged = [NSEntityDescription insertNewObjectForEntityForName:@"ManageCompany" inManagedObjectContext:_context];
     [companyManaged setComapnyFullName:companyFullName];
@@ -76,11 +107,40 @@
     [_context deleteObject:companyObj];
     [_companyArr removeObjectAtIndex:companyIndex];
     [self saveChanges];
-   // [self showAllCompanies];
 
     if(self.updateDelegate){
         [self.updateDelegate update];
     }
+}
+
+-(NSMutableArray *)showAllCompanies
+{
+    NSFetchRequest *req = [[NSFetchRequest alloc] init];
+    
+    NSEntityDescription *entityDesc = [[_model entitiesByName] objectForKey:@"ManageCompany"];
+    [req setEntity:entityDesc];
+    
+    
+    NSError *err = nil;
+    NSArray *result = [_context executeFetchRequest:req error:&err];
+    
+    [req release];
+    
+    if (!result) {
+        //[NSException raise:@"Fetch Failed" format:@"Reason : %@",err.localizedDescription];
+        NSLog(@"show exception %@",err.localizedDescription);
+    }
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"comapnyFullName" ascending:YES];
+    
+    if(_companyArr) {
+        [_companyArr removeAllObjects];
+        [_companyArr release];
+    }
+    
+    _companyArr = [[NSMutableArray alloc] initWithArray:[result sortedArrayUsingDescriptors:@[sort]]];
+    NSLog(@"_companyArr %p",_companyArr);
+    
+    return _companyArr;
 }
 
 -(void) insertProductWithProductName : (NSString *)productName andProductUrl : (NSString *)productUrl andProductImgUrl : (NSString *)productImgUrl andCompanyIndex:(NSInteger)companyIndex
@@ -141,68 +201,44 @@
 
 -(void) deleteProduct : (ManageProduct *)productObj andCompanyIndex:(NSInteger)companyIndex {
     
-//    Company *company = [self.companyArr objectAtIndex:companyIndex];
-//    [company.productArr removeObject:productObj];
+    NSLog(@"product name: %@", productObj.productName);
     
     ManageCompany *company = [self.companyArr objectAtIndex:companyIndex];
-
-    NSMutableSet *mutableSet = [company.product mutableCopy];
-    [mutableSet removeObject:productObj];
-    company.product = [mutableSet copy];
-    
+    [company removeProductObject:productObj];
     [self saveChanges];
+}
+
+-(NSSet *)showAllProductsWithCompanyIndex : (NSInteger)companyIndex
+{
+    ManageCompany *company = [self.companyArr objectAtIndex:companyIndex];
+    NSLog(@"productArr %@",company.product);
+    return company.product;
 }
 
 -(void) fetchStockPrices {
     
     NSLog(@"_companyArr %@",_companyArr);
     
-    NSMutableArray *_companyIdentifierArr = [[NSMutableArray alloc]init];
+    NSMutableArray *companyIdentifierArr = [[[NSMutableArray alloc]init] autorelease];
     for (int i = 0; i < _companyArr.count; i++)
     {
-        Company *company = [_companyArr objectAtIndex:i];
-        [_companyIdentifierArr addObject:company.companyShortName];
+        ManageCompany *company = [_companyArr objectAtIndex:i];
+        [companyIdentifierArr addObject:company.companyShortName];
     }
     NSString *stringCon;
-    if (_companyIdentifierArr.count > 0) {
+    if (companyIdentifierArr.count > 0) {
         
-        if (_companyIdentifierArr.count > 1) {
-            stringCon = [_companyIdentifierArr componentsJoinedByString:@","];
+        if (companyIdentifierArr.count > 1) {
+            stringCon = [companyIdentifierArr componentsJoinedByString:@","];
         }
         else
         {
-            stringCon = [_companyIdentifierArr componentsJoinedByString:@""];
+            stringCon = [companyIdentifierArr componentsJoinedByString:@""];
         }
         NSLog(@"stringCon %@",stringCon);
-        [self.stockFetcher fetchStockPriceWithTicker:stringCon];
-    }
-}
-
--(NSString *) archivePath
-{
-    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentDirectory = [documentDirectories objectAtIndex:0];
-    return [documentDirectory stringByAppendingPathComponent:@"storeCompany.data"];
-}
-
--(void) initModelContext
-{
-    _model = [NSManagedObjectModel mergedModelFromBundles:nil];
-    NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_model];
-    NSString *path = [self archivePath];
-    NSURL *storeUrl = [NSURL fileURLWithPath:path];
-    NSError *error = nil;
-
-    if (![psc addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeUrl options:nil error:&error]) {
-//        [NSException raise:@"Open failed" format:@"Reason %@",error.localizedDescription];
-        NSLog(@"err %@",error.localizedDescription);
         
+        [_stockFetcher fetchStockPriceWithTicker:stringCon];
     }
-    _context = [[NSManagedObjectContext alloc] init];
-    [_context setPersistentStoreCoordinator:psc];
-    
-    NSUndoManager *undoManager = [[NSUndoManager alloc] init];
-    [_context setUndoManager: undoManager];
 }
 
 - (void)stockFetchDidFailWithError:(NSError *)error {
@@ -232,6 +268,8 @@
         }
     }
     
+    //[self saveChanges];
+    
     if(self.updateDelegate){
         [self showAllCompanies];
         [self.updateDelegate update];
@@ -247,33 +285,6 @@
         NSLog(@"error saving %@",error.localizedDescription);
     }
     NSLog(@"Data is saved");
-}
-
--(NSMutableArray *)showAllCompanies
-{
-    NSFetchRequest *req = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entityDesc = [[_model entitiesByName] objectForKey:@"ManageCompany"];
-    [req setEntity:entityDesc];
-    
-    NSError *err = nil;
-    NSArray *result = [_context executeFetchRequest:req error:&err];
-    
-    if (!result) {
-        //[NSException raise:@"Fetch Failed" format:@"Reason : %@",err.localizedDescription];
-        NSLog(@"show exception %@",err.localizedDescription);
-    }
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"comapnyFullName" ascending:YES];
-    _companyArr = [[NSMutableArray alloc] initWithArray:[result sortedArrayUsingDescriptors:@[sort]]];
-    NSLog(@"_companyArr %p",_companyArr);
-    
-    return _companyArr;
-}
-
--(NSSet *)showAllProductsWithCompanyIndex : (NSInteger)companyIndex
-{
-    ManageCompany *company = [self.companyArr objectAtIndex:companyIndex];
-    NSLog(@"productArr %@",company.product);
-    return company.product;
 }
 
 -(void)undoChanges

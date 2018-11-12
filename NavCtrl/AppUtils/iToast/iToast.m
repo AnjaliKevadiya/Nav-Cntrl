@@ -49,8 +49,9 @@ static iToastSettings *sharedSettings = nil;
 
 
 - (id) initWithText:(NSString *) tex{
+    
 	if (self = [super init]) {
-		self.text = [tex copy];
+		_text = [tex copy];
 	}
 	
 	return self;
@@ -68,21 +69,22 @@ static iToastSettings *sharedSettings = nil;
 		theSettings = [iToastSettings getSharedSettings];
 	}
 	
-	UIImage *image = [theSettings.images valueForKey:[NSString stringWithFormat:@"%ld", type]];
+    UIImage *image = [theSettings.images valueForKey:[NSString stringWithFormat:@"%ld", (long)type]];
 	
 	UIFont *font = [UIFont systemFontOfSize:theSettings.fontSize];
 
-    NSAttributedString *attributedText =[[NSAttributedString alloc] initWithString:self.text attributes:@{ NSFontAttributeName: font}];
+    NSAttributedString *attributedText =[[NSAttributedString alloc] initWithString:_text attributes:@{ NSFontAttributeName: font}];
     CGRect rect = [attributedText boundingRectWithSize:CGSizeMake(280, 60)
                                                options:NSStringDrawingUsesLineFragmentOrigin
                                                context:nil];
+    [attributedText release];
     CGSize textSize = rect.size;
 	
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width + kComponentPadding, textSize.height + kComponentPadding)];
 	label.backgroundColor = [UIColor clearColor];
 	label.textColor = [UIColor whiteColor];
 	label.font = font;
-	label.text = self.text;
+	label.text = _text;
 	label.numberOfLines = 0;
 	if (theSettings.useShadow) {
 		label.shadowColor = [UIColor darkGrayColor];
@@ -171,9 +173,9 @@ static iToastSettings *sharedSettings = nil;
 	[UIView commitAnimations];
 
 #if !__has_feature(objc_arc)
-	self.view = [v retain];
+	_view = [v retain];
 #else
-  self.view = v;
+  _view = v;
 #endif
 	
 	[v addTarget:self action:@selector(hideToast:) forControlEvents:UIControlEventTouchDown];
@@ -203,7 +205,7 @@ static iToastSettings *sharedSettings = nil;
     if (!theSettings) {
       theSettings = [iToastSettings getSharedSettings];
     }
-    UIImage *image = [theSettings.images valueForKey:[NSString stringWithFormat:@"%ld", type]];
+    UIImage *image = [theSettings.images valueForKey:[NSString stringWithFormat:@"%ld", (long)type]];
     
     if (!image) return CGRectZero;
     
@@ -227,7 +229,7 @@ static iToastSettings *sharedSettings = nil;
 
 - (void) hideToast:(NSTimer*)theTimer{
 	[UIView beginAnimations:nil context:NULL];
-	self.view.alpha = 0;
+	_view.alpha = 0;
 	[UIView commitAnimations];
 	
 	NSTimer *timer2 = [NSTimer timerWithTimeInterval:500 
@@ -237,7 +239,7 @@ static iToastSettings *sharedSettings = nil;
 }
 
 - (void) removeToast:(NSTimer*)theTimer{
-	[self.view removeFromSuperview];
+	[_view removeFromSuperview];
 }
 
 
@@ -255,62 +257,62 @@ static iToastSettings *sharedSettings = nil;
 
 
 - (iToast *) setDuration:(NSInteger ) duration{
-	self.settings.duration = duration;
+	_settings.duration = duration;
 	return self;
 }
 
 - (iToast *) setGravity:(iToastGravity) gravity 
 			 offsetLeft:(NSInteger) left
 			  offsetTop:(NSInteger) top{
-	self.settings.gravity = gravity;
-	self.settings.offsetLeft = left;
-	self.settings.offsetTop = top;
+	_settings.gravity = gravity;
+	_settings.offsetLeft = left;
+	_settings.offsetTop = top;
 	return self;
 }
 
 - (iToast *) setGravity:(iToastGravity) gravity{
-	self.settings.gravity = gravity;
+	_settings.gravity = gravity;
 	return self;
 }
 
 - (iToast *) setPosition:(CGPoint) _position{
-	self.settings.postition = CGPointMake(_position.x, _position.y);
+	_settings.postition = CGPointMake(_position.x, _position.y);
 	
 	return self;
 }
 
 - (iToast *) setFontSize:(CGFloat) fontSize{
-	self.settings.fontSize = fontSize;
+	_settings.fontSize = fontSize;
 	return self;
 }
 
 - (iToast *) setUseShadow:(BOOL) useShadow{
-	self.settings.useShadow = useShadow;
+	_settings.useShadow = useShadow;
 	return self;
 }
 
 - (iToast *) setCornerRadius:(CGFloat) cornerRadius{
-	self.settings.cornerRadius = cornerRadius;
+	_settings.cornerRadius = cornerRadius;
 	return self;
 }
 
 - (iToast *) setBgRed:(CGFloat) bgRed{
-	self.settings.bgRed = bgRed;
+	_settings.bgRed = bgRed;
 	return self;
 }
 
 - (iToast *) setBgGreen:(CGFloat) bgGreen{
-	self.settings.bgGreen = bgGreen;
+	_settings.bgGreen = bgGreen;
 	return self;
 }
 
 - (iToast *) setBgBlue:(CGFloat) bgBlue{
-	self.settings.bgBlue = bgBlue;
+	_settings.bgBlue = bgBlue;
 	return self;
 }
 
 - (iToast *) setBgAlpha:(CGFloat) bgAlpha{
-	self.settings.bgAlpha = bgAlpha;
+	_settings.bgAlpha = bgAlpha;
 	return self;
 }
 
@@ -321,6 +323,13 @@ static iToastSettings *sharedSettings = nil;
 	}
 	
 	return _settings;
+}
+
+-(void)dealloc {
+    [_text release];
+    [_view release];
+    [_settings release];
+    [super dealloc];
 }
 
 @end
@@ -353,7 +362,7 @@ static iToastSettings *sharedSettings = nil;
 	}
 	
 	if (img) {
-		NSString *key = [NSString stringWithFormat:@"%ld", type];
+        NSString *key = [NSString stringWithFormat:@"%ld", (long)type];
 		[images setValue:img forKey:key];
 	}
     
@@ -415,8 +424,8 @@ static iToastSettings *sharedSettings = nil;
 	return copy;
 }
 
--(void)dealloc
-{
-    [super dealloc];
+-(void)dealloc {
+     [super dealloc];
 }
+
 @end

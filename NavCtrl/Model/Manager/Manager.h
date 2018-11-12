@@ -7,13 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Company.h"
-#import "Product.h"
-#import "AppUtils.h"
 #import <CoreData/CoreData.h>
-//#import "ManagedCompany.h"
-//#import "ManagedProduct.h"
-
 #import "ManageCompany+CoreDataClass.h"
 #import "ManageProduct+CoreDataClass.h"
 
@@ -34,29 +28,34 @@
 
 + (id) shareManager;
 
+-(NSString *) archivePath;
+-(void) initModelContext;
+
+#pragma mark ADD, UPDATE, DELETE, SHOW Companies
 -(void) insertCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice;
 
 -(void) updateCompanyWithCompanyFullName : (NSString *)companyFullName andCompanyShortName : (NSString *)companyShortName andCompanyUrl : (NSString *)companyUrl andStockPrice : (NSString *)stockPrice withCompanyObj:(ManageCompany *)companyObj;
 
 -(void) deleteCompany : (ManageCompany *)companyObj andCompanyIndex:(NSInteger)companyIndex;
 
-    
+-(NSMutableArray *)showAllCompanies;
+
+
+#pragma mark ADD, UPDATE, DELETE, SHOW Products
 -(void) insertProductWithProductName : (NSString *)productName andProductUrl : (NSString *)productUrl andProductImgUrl : (NSString *)productImgUrl andCompanyIndex:(NSInteger)companyIndex;
 
 -(void) updateProductWithProductName : (NSString *)productName andProductUrl : (NSString *)productUrl andProductImgUrl : (NSString *)productImgUrl andProductObj:(ManageProduct *)productObj;
 
 -(void) deleteProduct : (ManageProduct *)productObj andCompanyIndex:(NSInteger)companyIndex;
 
-
--(void) fetchStockPrices;
-
--(NSString *) archivePath;
--(void) initModelContext;
-
--(NSMutableArray *)showAllCompanies;
 -(NSSet *)showAllProductsWithCompanyIndex : (NSInteger)companyIndex;
 
 
+#pragma mark Fetch Stock Price
+-(void) fetchStockPrices;
+
+
+#pragma mark Undo & Redo
 -(void)undoChanges;
 -(void)redoChanges;
 

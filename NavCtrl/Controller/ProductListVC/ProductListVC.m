@@ -16,19 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    _managerObj = [Manager shareManager];
-    
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStylePlain target:self action:@selector(onTapAddProduct:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:127.0f/255.0f green:180.0f/255.0f blue:57.0f/255.0f alpha:1.0f];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-
-    _companyTitleLbl.text = self.title;
-    _companyNameLbl.text = _comapnyFullnameStr;
-    _companyImgView.image = [UIImage imageNamed:_companyImgStr];
-    
-    NSLog(@"companyIndex %ld",(long)_companyIndex);
+    [self setUpLayouts];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -37,6 +25,10 @@
     
     //Company *company = [_managerObj.companyArr objectAtIndex:_companyIndex];
 
+    if (_productArr) {
+        [_productArr removeAllObjects];
+        [_productArr release];
+    }
     NSSet *set = [_managerObj showAllProductsWithCompanyIndex:_companyIndex];
     _productArr = [[set allObjects] mutableCopy];
     
@@ -55,20 +47,23 @@
     [_tblView reloadData];
 }
 
+#pragma mark - Add Product Tap
 -(IBAction)onTapAddProduct:(id)sender
 {
     AddProductVC *addProductVC = [[AddProductVC alloc] initWithNibName:@"AddProductVC" bundle:nil];
     addProductVC.companyIndex = _companyIndex;
     [self presentViewController:addProductVC animated:YES completion:^{
-        
-    } ];
+    }];
+    [addProductVC release];
 }
 
+#pragma mark - Back Tap
 -(IBAction)onTapBack:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - UITableView Delegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -91,7 +86,26 @@
     _productObj = [_productArr objectAtIndex:indexPath.row];
     cell.lblName.text = _productObj.productName;
     cell.lblStockPrice.text = @"";
-    cell.imgView.image = [UIImage imageNamed:_productObj.productImageUrl];
+    //cell.imgView.image = [UIImage imageNamed:_productObj.productImageUrl];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSURL *url = [[NSURL alloc] initWithString:_productObj.productImageUrl];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        [url release];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ( data == nil )
+            {
+                cell.imgView.image = [UIImage imageNamed:@"emptystate-homeView"];
+                return ;
+            }
+            else
+            {
+                cell.imgView.image = [UIImage imageWithData: data];
+            }
+        });
+        [data release];
+    });
+
     return cell;
 }
 
@@ -99,7 +113,7 @@
 {
     _productObj = [_productArr objectAtIndex:indexPath.row];
     
-    ProductDetailVC *productDetailVC = [[ProductDetailVC alloc] init];
+    ProductDetailVC *productDetailVC = [[[ProductDetailVC alloc] init] autorelease];
     productDetailVC.companyIndex = _companyIndex;
     productDetailVC.productObj = _productObj;
     [self.navigationController pushViewController:productDetailVC animated:YES];
@@ -119,7 +133,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
-//        _productObj = [_productArr objectAtIndex:indexPath.row];
+        _productObj = [_productArr objectAtIndex:indexPath.row];
         [_productArr removeObjectAtIndex:indexPath.row];
         
         [self.managerObj deleteProduct:_productObj andCompanyIndex:_companyIndex];
@@ -139,6 +153,43 @@
     }
 }
 
+#pragma mark - SetUpLayouts
+-(void)setUpLayouts
+{
+    self.managerObj = [Manager shareManager];
+    
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add"] style:UIBarButtonItemStylePlain target:self action:@selector(onTapAddProduct:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release];
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:127.0f/255.0f green:180.0f/255.0f blue:57.0f/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
+    _companyTitleLbl.text = self.title;
+    _companyNameLbl.text = _comapnyFullnameStr;
+    //_companyImgView.image = [UIImage imageNamed:_companyImgStr];
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSURL *url = [[NSURL alloc] initWithString:_companyImgStr];
+        NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+        [url release];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            if ( data == nil )
+            {
+                _companyImgView.image = [UIImage imageNamed:@"emptystate-homeView"];
+                return ;
+            }
+            else
+            {
+                _companyImgView.image = [UIImage imageWithData:data];
+            }
+        });
+        [data release];
+    });
+    //NSLog(@"companyIndex %ld",(long)_companyIndex);
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -150,12 +201,12 @@
     [_companyImgView release];
     [_tblView release];
     [_noDataView release];
-    [_managerObj release];
-    [_productObj release];
     [_productArr release];
     [_companyImgStr release];
     [_companyTitleStr release];
     [_comapnyFullnameStr release];
+   // [_managerObj release];
+    [_productObj release];
     
     [super dealloc];
 }

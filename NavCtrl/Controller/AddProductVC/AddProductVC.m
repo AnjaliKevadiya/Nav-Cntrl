@@ -29,8 +29,15 @@
     }
     NSLog(@"_companyIndex %ld",(long)_companyIndex);
 
+    UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapScreen)];
+    gesture.numberOfTouchesRequired = 1;
+    gesture.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:gesture];
+    self.view.userInteractionEnabled = YES;
+    [gesture release];
 }
 
+#pragma mark - Save Button Tap
 -(IBAction)onTapSave:(id)sender
 {
     if (_productNameTxt.text.length == 0) {
@@ -89,11 +96,55 @@
     }
 }
 
+#pragma mark - Cancel Button Tap
 -(IBAction)onTapCancel:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+#pragma mark - UITextField Delegate Methods
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSInteger tag = textField.tag + 1;
+    UIResponder* nextResponder = [textField.superview viewWithTag:tag];
+    if (nextResponder) {
+        [nextResponder becomeFirstResponder];
+    }
+    else
+    {
+        [textField resignFirstResponder];
+    }
+    return NO;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow) name:UIKeyboardDidShowNotification object:nil];
+    return YES;
+}
+
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardDidHideNotification object:nil];
+    [_mainView endEditing:YES];
+    return YES;
+}
+
+-(void)keyboardDidShow
+{
+    [_mainView setFrame:CGRectMake(_mainView.frame.origin.x,87,_mainView.frame.size.width,_mainView.frame.size.height)];
+}
+
+-(void)keyboardDidHide
+{
+    [_mainView setFrame:CGRectMake(_mainView.frame.origin.x, 165, _mainView.frame.size.width,_mainView.frame.size.height)];
+}
+
+-(void)onTapScreen
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,14 +153,13 @@
 
 -(void)dealloc
 {
-    [_productObj release];
-    [_managerObj release];
     [_productNameTxt release];
     [_productUrlTxt release];
     [_productImgUrlTxt release];
     [_nameView release];
     [_urlView release];
     [_imgUrlView release];
+    [_mainView release];
     [super dealloc];
 }
 

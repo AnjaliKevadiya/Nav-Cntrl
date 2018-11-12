@@ -7,11 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CompanyVC.h"
-#import "Company.h"
-#import "Manager.h"
 #import "AddCompanyVC.h"
-#import "Product.h"
 #import "CompanyTableViewCell.h"
 #import "ProductListVC.h"
 
@@ -25,7 +21,6 @@
 
 @property (retain, nonatomic) Manager *manager;
 @property (retain, nonatomic) ManageCompany *company;
-@property (retain, nonatomic) ProductListVC *productListVC;
 
 @property (retain, nonatomic) NSMutableArray *companyArr;
 
